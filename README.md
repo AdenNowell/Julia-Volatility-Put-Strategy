@@ -1,9 +1,9 @@
 
-# 📉 Volatility-Based Put Selling Strategy in Julia
+# Volatility-Based Put Selling Strategy in Julia
 
 This is a fully self-contained backtesting engine in Julia for simulating a volatility-triggered, cash-secured put strategy on SPY.
 
-## ⚙️ Strategy Overview
+## Strategy Overview
 
 - Calculate 80th percentile of implied volatility (IV) over a rolling 100-day window
 - When IV > threshold → sell 30-day at-the-money (ATM) SPY put
@@ -11,7 +11,7 @@ This is a fully self-contained backtesting engine in Julia for simulating a vola
 - Tracks account equity, cash, and collateral over time
 - Benchmarks performance against SPY
 
-## 📈 Example Output
+## Example Output
 
 ```
 Performance Summary
@@ -23,7 +23,7 @@ Sharpe Ratio      :    0.76
 
 ![Equity Curve](plots/equity_vs_spy.png)
 
-## 🛠️ Requirements
+## Packages Needed
 
 - Julia 1.9+
 - Packages:
@@ -39,7 +39,7 @@ using Pkg
 Pkg.add(["DataFrames", "CSV", "Distributions", "Plots"])
 ```
 
-## ▶️ How to Run
+## How to Run
 
 ```bash
 julia main.jl
@@ -47,7 +47,7 @@ julia main.jl
 
 No data setup required — dummy data is simulated if no CSVs are found.
 
-## 🚀 Future Add-ons
+## Future Add-ons
 
 - Real IV data using Yahoo Finance or IVolatility
 - Drawdown and rolling Sharpe plots
