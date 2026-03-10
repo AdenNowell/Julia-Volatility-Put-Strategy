@@ -1,48 +1,92 @@
+# Julia Experiment
 
-# Volatility-Based Put Selling Strategy in Julia
+## Project Summary
+This is a research-style Julia backtest for a volatility-triggered cash-secured put strategy on SPY. The goal is not to claim production alpha, but to demonstrate systematic research workflow: signal construction, options pricing, trade simulation, capital accounting, parameter sensitivity, and robustness testing.
 
-This is a fully self-contained backtesting engine in Julia for simulating a volatility-triggered, cash-secured put strategy on SPY.
+## Research Question
+Does selling short-dated cash-secured puts during elevated implied-volatility regimes improve risk-adjusted performance relative to passive SPY exposure?
 
-## Strategy Overview
+## Methodology
+1. Load SPY price data and implied-volatility data.
+2. Compute a no-lookahead rolling IV threshold.
+3. Trigger put-selling only when current IV exceeds the historical threshold.
+4. Price each option using a Black-Scholes approximation.
+5. Simulate trade PnL with transaction costs and collateral accounting.
+6. Evaluate portfolio performance, drawdowns, and trade-level distributions.
+7. Run parameter sweeps and bootstrap robustness tests.
 
-- Calculate 80th percentile of implied volatility (IV) over a rolling 100-day window
-- When IV > threshold → sell 30-day at-the-money (ATM) SPY put
-- Options are priced using the Black-Scholes model
-- Tracks account equity, cash, and collateral over time
-- Benchmarks performance against SPY
+## Improvements Over the Original Version
+- Fixed put payoff logic.
+- Corrected collateral and accounting mechanics.
+- Removed look-ahead bias from signal construction.
+- Added transaction costs.
+- Added max-open-position control.
+- Added drawdown and trade-level metrics.
+- Added 5+ output charts.
+- Added parameter sweep heatmap.
+- Added bootstrap robustness analysis.
 
-## Example Output
+## Files
+- `main.jl`: top-level runner
+- `src/data.jl`: load and prepare data
+- `src/signals.jl`: IV signal logic
+- `src/pricing.jl`: Black-Scholes put pricing
+- `src/backtest.jl`: trades and account simulation
+- `src/metrics.jl`: performance and trade metrics
+- `src/plots.jl`: charts
+- `src/sweep.jl`: parameter sweep + heatmap
+- `src/bootstrap.jl`: bootstrap robustness
 
-```
-Performance Summary
--------------------
-Total Return      :   12.43 %
-Annual Volatility :   17.86 %
-Sharpe Ratio      :    0.76
-```
+## Input Data Format
+### `data/spy_prices.csv`
+Columns:
+- `Date`
+- `Close`
 
-## Packages Needed
+### `data/spy_iv.csv`
+Columns:
+- `Date`
+- `IV`
 
-- Julia 1.9+
-- Packages:
-  - DataFrames
-  - CSV
-  - Distributions
-  - Statistics
-  - Plots
+If these files are missing, the project generates simulated placeholder data so the full research pipeline can still be executed.
 
-Install with:
+## Setup
+In Julia:
+
 ```julia
 using Pkg
-Pkg.add(["DataFrames", "CSV", "Distributions", "Plots"])
+Pkg.activate(".")
+Pkg.add(["CSV", "DataFrames", "Distributions", "Plots", "StatsBase"])
 ```
 
-## How to Run
+Then run:
 
-```bash
-julia main.jl
+```julia
+julia --project=. main.jl
 ```
 
-No data setup required — dummy data is simulated if no CSVs are found.
+## Outputs
+### Tables
+- `outputs/tables/daily.csv`
+- `outputs/tables/trades.csv`
+- `outputs/tables/performance_summary.csv`
+- `outputs/tables/parameter_sweep.csv`
+- `outputs/tables/bootstrap_summary.csv`
 
-MIT License
+### Figures
+- `01_equity_vs_spy.png`
+- `02_drawdown.png`
+- `03_trade_pnl_hist.png`
+- `04_entry_iv_vs_pnl.png`
+- `05_open_positions.png`
+- `06_sweep_heatmap_sharpe.png`
+- `07_bootstrap_total_pnl.png`
+
+## Limitations
+- Uses a Black-Scholes approximation instead of real option chain execution.
+- Assumes European expiry-style payoff.
+- Does not model assignment carry, early exercise, dividends, or margin rules.
+- Designed as a research prototype rather than a production execution engine.
+
+## Why Julia
+Julia was used because it is expressive for numerical research while still supporting organized, reproducible modeling workflows.
