@@ -1,14 +1,12 @@
 # Julia Experiment
 
 ## Project Summary
-This is a research-style Julia backtest for a volatility-triggered cash-secured put strategy on SPY. The goal is not to claim production alpha, but to demonstrate systematic research workflow: signal construction, options pricing, trade simulation, capital accounting, parameter sensitivity, and robustness testing.
-
+This is a research-style Julia backtest for a volatility-triggered cash-secured put strategy on SPY. The goal is not to claim production alpha, but to demonstrate systematic research workflow.
 ## Research Question
 Does selling short-dated cash-secured puts during elevated implied-volatility regimes improve risk-adjusted performance relative to passive SPY exposure?
 
 ## Methodology
 1. Load SPY price data and implied-volatility data.
-2. Compute a no-lookahead rolling IV threshold.
 3. Trigger put-selling only when current IV exceeds the historical threshold.
 4. Price each option using a Black-Scholes approximation.
 5. Simulate trade PnL with transaction costs and collateral accounting.
@@ -89,4 +87,4 @@ julia --project=. main.jl
 - Designed as a research prototype rather than a production execution engine.
 
 ## Why Julia
-Julia was used because it is expressive for numerical research while still supporting organized, reproducible modeling workflows.
+I wanted to learn it compared to matlab
