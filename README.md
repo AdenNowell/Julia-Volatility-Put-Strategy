@@ -21,8 +21,6 @@ Annual Volatility :   17.86 %
 Sharpe Ratio      :    0.76
 ```
 
-![Equity Curve](plots/equity_vs_spy.png)
-
 ## Packages Needed
 
 - Julia 1.9+
@@ -46,14 +44,5 @@ julia main.jl
 ```
 
 No data setup required — dummy data is simulated if no CSVs are found.
-
-## Future Add-ons
-
-- Real IV data using Yahoo Finance or IVolatility
-- Drawdown and rolling Sharpe plots
-- Parameterized CLI or Jupyter notebook interface
-- Multi-strike/multi-tenor comparison
-
-## 📜 License
 
 MIT License
