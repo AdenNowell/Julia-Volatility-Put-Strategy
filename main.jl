@@ -1,6 +1,6 @@
 using Pkg
 Pkg.activate(@__DIR__)
-
+Pkg.instantiate()
 using CSV, DataFrames, Dates, Distributions, Plots, Printf, Random, Statistics, StatsBase
 
 include("src/types.jl")
